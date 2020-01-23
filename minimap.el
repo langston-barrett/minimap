@@ -50,6 +50,11 @@
 
 ;;; News:
 ;;
+;;;; Changes since v1.2:
+;;
+;; - Possibility to set a maximum width of the minimap window
+;;   (`minimap-maximum-width').
+;;
 ;;;; Changes since v1.1:
 ;;
 ;; - Change some defaults: better colors, reduced update delay.
@@ -140,6 +145,12 @@ By default, this is only a different background color."
 
 (defcustom minimap-minimum-width 30
   "Minimum width of minimap in characters (default size).
+Use nil to disable."
+  :type 'number
+  :group 'minimap)
+
+(defcustom minimap-maximum-width 30
+  "Maximum width of minimap in characters (default size).
 Use nil to disable."
   :type 'number
   :group 'minimap)
@@ -342,6 +353,8 @@ when you enter a buffer which is not derived from
 			 minimap-width-fraction))))
     (when (< width minimap-minimum-width)
       (setq width minimap-minimum-width))
+    (when (> width minimap-maximum-width)
+      (setq width minimap-maximum-width))
     (if (eq minimap-window-location 'left)
 	(split-window-horizontally width)
       (split-window-horizontally
